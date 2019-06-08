@@ -10,16 +10,14 @@ const INPUT = {
 
 /********** TEXT INPUT *************/
 
-const input = ({ fullWidth, error, ...rest }) => {
+const input = ({ fullWidth, error, ...props }) => {
   return (
     <Fragment>
-      <input {...rest} />
+      <input {...props} />
       {error && <ErrorMessage>This field can not be empty</ErrorMessage>}
     </Fragment>
   );
 };
-
-const textarea = ({ fullWidth, ...rest }) => <textarea {...rest} />;
 
 export const TextInput = styled(input)`
   outline: none;
@@ -71,7 +69,7 @@ export const TextInputGroup = styled.div`
   flex-direction: ${props => (props.horizontal ? 'row' : 'column')};
 `;
 
-export const TextArea = styled(textarea)`
+export const TextArea = styled.textarea`
   resize: none;
   outline: none;
   border: 1px solid ${INPUT.default};
@@ -114,7 +112,7 @@ input.propTypes = {
   width: PropTypes.number || PropTypes.string
 };
 
-textarea.propTypes = {
+TextArea.propTypes = {
   fullWidth: PropTypes.bool,
   placeholder: PropTypes.string
 };
