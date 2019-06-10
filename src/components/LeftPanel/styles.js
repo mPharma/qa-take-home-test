@@ -10,11 +10,11 @@ const INPUT = {
 
 /********** TEXT INPUT *************/
 
-const input = ({ fullWidth, error, ...props }) => {
+const input = ({ fullWidth, error, errorMessage, ...props }) => {
   return (
     <Fragment>
       <input {...props} />
-      {error && <ErrorMessage>This field can not be empty</ErrorMessage>}
+      {error && <ErrorMessage>{errorMessage || 'This field can not be empty'}</ErrorMessage>}
     </Fragment>
   );
 };

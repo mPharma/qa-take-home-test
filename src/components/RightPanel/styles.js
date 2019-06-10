@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const UserCardContainer = styled.div`
+export const UserCardContainer = styled.div.attrs({
+  'data-test-id': 'user-card'
+})`
   height: 94px;
   width: 441px;
   border: 1px solid #eeeeee;
@@ -9,9 +11,12 @@ export const UserCardContainer = styled.div`
   padding-left: 24px;
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
 `;
 
-export const UserIcon = styled.div`
+export const UserIcon = styled.div.attrs({
+  'data-test-id': 'icon'
+})`
   height: 42px;
   width: 42px;
   background-color: #587cc8;
@@ -21,9 +26,12 @@ export const UserIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-transform: uppercase;
 `;
 
-export const UserInfo = styled.div`
+export const UserInfo = styled.div.attrs({
+  'data-test-id': 'user-info'
+})`
   display: flex;
   flex-direction: column;
   margin-left: 13px;
@@ -47,7 +55,7 @@ export const AllCardsContainer = styled.main.attrs({
   'data-test-id': 'all-user-cards'
 })`
   height: 70%;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   ::-webkit-scrollbar {
     width: 4px;

@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LeftPanel from './components/LeftPanel/';
 import RightPanel from './components/RightPanel/';
+import UserStore from './context/UserStore';
 import './index.css';
 
 function App() {
   return (
     <div style={styles.container}>
-      <LeftPanel />
-      <RightPanel />
+      <UserStore>
+        <LeftPanel />
+        <RightPanel />
+      </UserStore>
     </div>
   );
 }

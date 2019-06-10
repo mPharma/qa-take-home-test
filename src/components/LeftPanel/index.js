@@ -1,55 +1,116 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TextInput, TextInputLabel, TextInputGroup, TextArea, Button } from './styles';
+import useForm from '../../hooks/useForm';
+import validate from '../../helpers/validate';
+import { withUserContext } from '../../context/UserStore';
 
-class LeftPanel extends Component {
-  render() {
-    return (
-      <div style={styles.container}>
-        <h1 style={styles.header}>Data Test App</h1>
-        <p>Please complete the form below to continue</p>
+function LeftPanel(props) {
+  const { values, errors, handleChange, reset } = useForm(validate);
 
-        <main style={styles.textInputContainer}>
-          <TextInputGroup>
-            <TextInputLabel>First Name</TextInputLabel>
-            <TextInput type="text" placeholder="eg. John" fullWidth data-test-id="first-name" />
-          </TextInputGroup>
-
-          <section style={styles.group}>
-            <TextInputGroup>
-              <TextInputLabel>Middle Name</TextInputLabel>
-              <TextInput type="text" placeholder="eg. Kwesi" width={190} data-test-id="middle-name" />
-            </TextInputGroup>
-
-            <TextInputGroup>
-              <TextInputLabel>Last Name</TextInputLabel>
-              <TextInput type="text" placeholder="eg. Doe" data-test-id="last-name" />
-            </TextInputGroup>
-          </section>
-
-          <TextInputGroup>
-            <TextInputLabel>Phone Number</TextInputLabel>
-            <TextInput type="number" placeholder="eg. 023-234-2343" fullWidth data-test-id="phone-number" />
-          </TextInputGroup>
-
-          <TextInputGroup>
-            <TextInputLabel>Date of Birth</TextInputLabel>
-            <TextInput type="date" placeholder="eg. dd - mm - yy" fullWidth error data-test-id="dob" />
-          </TextInputGroup>
-
-          <TextInputGroup>
-            <TextInputLabel>Address</TextInputLabel>
-            <TextArea placeholder="Enter Address here…" fullWidth data-test-id="address" />
-          </TextInputGroup>
-        </main>
-
-        <div>
-          <Button type="sumbit" data-test-id="submit-btn" tabIndex="0">
-            Add New User
-          </Button>
-        </div>
-      </div>
-    );
+  function handleSubmit() {
+    const { addNewUser } = props.context;
+    Object.values(errors).length === 0 && addNewUser(values, reset);
   }
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.header}>Data Test App</h1>
+      <p>Please complete the form below to continue</p>
+
+      <main style={styles.textInputContainer}>
+        <TextInputGroup>
+          <TextInputLabel>First Name</TextInputLabel>
+          <TextInput
+            type="text"
+            name="firstName"
+            placeholder="eg. John"
+            fullWidth
+            error={errors.firstName}
+            errorMessage={'Must be between 2 and 10 chars'}
+            data-test-id="first-name"
+            onChange={handleChange}
+            value={values.firstName || ''}
+          />
+        </TextInputGroup>
+
+        <section style={styles.group}>
+          <TextInputGroup>
+            <TextInputLabel>Middle Name</TextInputLabel>
+            <TextInput
+              type="text"
+              name="middleName"
+              placeholder="eg. Kwesi"
+              width={190}
+              data-test-id="middle-name"
+              onChange={handleChange}
+              value={values.middleName || ''}
+            />
+          </TextInputGroup>
+
+          <TextInputGroup>
+            <TextInputLabel>Last Name</TextInputLabel>
+            <TextInput
+              type="text"
+              name="lastName"
+              placeholder="eg. Doe"
+              error={errors.lastName}
+              errorMessage={'Must be between 2 and 10 chars'}
+              data-test-id="last-name"
+              onChange={handleChange}
+              value={values.lastName || ''}
+            />
+          </TextInputGroup>
+        </section>
+
+        <TextInputGroup>
+          <TextInputLabel>Phone Number</TextInputLabel>
+          <TextInput
+            type="number"
+            name="phoneNumber"
+            placeholder="eg. 023-234-2343"
+            fullWidth
+            error={errors.phoneNumber}
+            errorMessage={'Phone number must be 10 digits'}
+            data-test-id="phone-number"
+            onChange={handleChange}
+            value={values.phoneNumber || ''}
+          />
+        </TextInputGroup>
+
+        <TextInputGroup>
+          <TextInputLabel>Date of Birth</TextInputLabel>
+          <TextInput
+            required
+            type="date"
+            name="dob"
+            placeholder="eg. dd - mm - yy"
+            fullWidth
+            data-test-id="dob"
+            onChange={handleChange}
+            value={values.dob || ''}
+          />
+        </TextInputGroup>
+
+        <TextInputGroup>
+          <TextInputLabel>Address</TextInputLabel>
+          <TextArea
+            name="address"
+            placeholder="Enter Address here…"
+            fullWidth
+            data-test-id="address"
+            onChange={handleChange}
+            value={values.address || ''}
+          />
+        </TextInputGroup>
+      </main>
+
+      <div>
+        <Button type="sumbit" data-test-id="submit-btn" tabIndex="0" onClick={handleSubmit}>
+          Add New User
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 const styles = {
@@ -72,4 +133,4 @@ const styles = {
   }
 };
 
-export default LeftPanel;
+export default withUserContext(LeftPanel);
