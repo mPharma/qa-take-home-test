@@ -11,7 +11,7 @@ export const withUserContext = Component => {
 
 class UserStore extends Component {
   state = {
-    users: loadState('users')
+    users: loadState('users') || []
   };
 
   addNewUser = (user, reset) => {
